@@ -47,7 +47,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   node_resource_group               = var.node_resource_group
   sku_tier                          = var.sku_tier
   http_application_routing_enabled  = var.http_application_routing_enabled
-  tags = var.tags
+  tags                              = var.tags
 
   dynamic "oms_agent" {
     for_each = var.enable_diagnostic_setting ? [1] : []
@@ -210,7 +210,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "this" {
 }
 
 resource "azurerm_role_assignment" "attach_acr" {
-  count = var.enable_attach_acr ? 1 : 0
+  count                = var.enable_attach_acr ? 1 : 0
   scope                = var.acr_id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_kubernetes_cluster.this.kubelet_identity[0].object_id
